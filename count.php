@@ -12,12 +12,10 @@
         </style>
     </head>
     <body>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Number of bookings</th>
-            </tr>
-            <?php
+        <?php
+        $month = $_GET['month'];
+        if (0 < $month  and $month < 13){
+            echo "<table><tr><th>Name</th><th>Number of bookings</th></tr>";
             $servername ="sci-mysql";//or "sci‐project". For coursework: "sci‐mysql"
             $username = "coa123wuser";
             $password = "grt64dkh!@2FD";
@@ -28,7 +26,6 @@
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
-            $month = $_GET['month'];
             $sql = "SELECT venue.name, COUNT(venue_booking.booking_date) 
             FROM `venue_booking`, `venue` 
             WHERE venue.venue_id = venue_booking.venue_id 
@@ -44,7 +41,11 @@
                 $output .= "</tr>";
                 echo "$output";
             }
-            ?>
-        </table>
+            echo "</table>";
+        } else {
+            echo "Month out of range";
+            exit();
+        }
+        ?>
     </body>
 </html>
